@@ -1,5 +1,7 @@
 
 import pandas as pd
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import CountVectorizer
@@ -50,13 +52,24 @@ print(avaliacoes.polarity.value_counts())
 acuracia = treinar_modelo(avaliacoes, "review_text", "polarity")
 print(f"Acurácia do modelo: {acuracia}")
 
+# gerar a nuvem de palavras (word cloud) com todas as palavras das avaliações
+todas_avaliacoes = list(avaliacoes.review_text)
+todas_palavras = ' '.join(todas_avaliacoes)
+print("Todas as palavras das avaliações foram unidas com sucesso!")
+print(len(todas_palavras))
 
+# gerar a nuvem de palavras
+nuvem_palavras = WordCloud(width=800, height=500,
+  max_font_size=110,
+  collocations=False).generate(todas_palavras)
+print("Nuvem de palavras gerada com sucesso!")
+print(nuvem_palavras)
 
-
-
-
-
-
+# exibir a nuvem de palavras
+plt.figure(figsize=(10,7))
+plt.imshow(nuvem_palavras, interpolation='bilinear')
+plt.axis("off")
+plt.show()
 
 
 
