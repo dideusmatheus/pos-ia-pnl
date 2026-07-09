@@ -49,11 +49,11 @@ def gerar_nuvem_palavras(texto):
     collocations=False).generate(texto)
 
 # função para exibir a nuvem de palavras
-def exibir_nuvem_palavras(nuvem_palavras):
-  plt.figure(figsize=(10,7))
+def exibir_nuvem_palavras(nuvem_palavras, titulo="Nuvem de palavras"):
+  plt.figure(figsize=(10,7), num=titulo)
   plt.imshow(nuvem_palavras, interpolation='bilinear')
+  plt.title(titulo)
   plt.axis("off")
-  plt.show()
 
 avaliacoes = pd.read_csv("data/Brazilian-Portuguese-Sentiment-Analysis-Datasets.csv")
 print('\n\n')
@@ -92,7 +92,8 @@ nuvem_palavras_negativas = gerar_nuvem_palavras(lista_palavras_negativas)
 nuvem_palavras_totais = gerar_nuvem_palavras(lista_palavras_totais)
 nuvem_palavras_positivas = gerar_nuvem_palavras(lista_palavras_positivas)
 
-# exibir as nuvens de palavras
-exibir_nuvem_palavras(nuvem_palavras_negativas)
-exibir_nuvem_palavras(nuvem_palavras_totais)
-exibir_nuvem_palavras(nuvem_palavras_positivas)
+# exibir as nuvens de palavras (todas juntas, em janelas separadas)
+exibir_nuvem_palavras(nuvem_palavras_negativas, "Avaliações negativas")
+exibir_nuvem_palavras(nuvem_palavras_totais, "Todas as avaliações")
+exibir_nuvem_palavras(nuvem_palavras_positivas, "Avaliações positivas")
+plt.show()
