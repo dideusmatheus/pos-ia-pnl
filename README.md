@@ -113,15 +113,29 @@ As avaliações negativas, positivas e o conjunto total são isolados em três f
 
 ### Nuvem de palavras — Avaliações negativas
 
-![Nuvem de palavras das avaliações negativas](assets/nuvem_palavras_negativas.png)
+![Nuvem de palavras das avaliações negativas](assets/nuvem_palavras/negativas.png)
 
 ### Nuvem de palavras — Todas as avaliações
 
-![Nuvem de palavras de todas as avaliações](assets/nuvem_palavras_totais.png)
+![Nuvem de palavras de todas as avaliações](assets/nuvem_palavras/totais.png)
 
 ### Nuvem de palavras — Avaliações positivas
 
-![Nuvem de palavras das avaliações positivas](assets/nuvem_palavras_positivas.png)
+![Nuvem de palavras das avaliações positivas](assets/nuvem_palavras/positivas.png)
+
+### Palavras mais frequentes — Avaliações negativas
+
+> **Nota:** contagem bruta de palavras (via `nltk.FreqDist`), **sem remoção de stop words** — por isso palavras como "e", "de", "que" e "o" aparecem entre as mais frequentes.
+
+![Frequência das palavras mais comuns nas avaliações negativas](assets/frequencia_palavras/negativas.png)
+
+### Palavras mais frequentes — Todas as avaliações
+
+![Frequência das palavras mais comuns em todas as avaliações](assets/frequencia_palavras/totais.png)
+
+### Palavras mais frequentes — Avaliações positivas
+
+![Frequência das palavras mais comuns nas avaliações positivas](assets/frequencia_palavras/positivas.png)
 
 ## Versionamento
 
