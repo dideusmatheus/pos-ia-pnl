@@ -1,4 +1,5 @@
 
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
@@ -49,11 +50,15 @@ def gerar_nuvem_palavras(texto):
     collocations=False).generate(texto)
 
 # função para exibir a nuvem de palavras
-def exibir_nuvem_palavras(nuvem_palavras, titulo="Nuvem de palavras"):
+def exibir_nuvem_palavras(nuvem_palavras, titulo="Nuvem de palavras", caminho_arquivo=None):
   plt.figure(figsize=(10,7), num=titulo)
   plt.imshow(nuvem_palavras, interpolation='bilinear')
   plt.title(titulo)
   plt.axis("off")
+
+  if caminho_arquivo:
+    os.makedirs(os.path.dirname(caminho_arquivo), exist_ok=True)
+    plt.savefig(caminho_arquivo, bbox_inches="tight")
 
 avaliacoes = pd.read_csv("data/Brazilian-Portuguese-Sentiment-Analysis-Datasets.csv")
 print('\n\n')
@@ -92,8 +97,8 @@ nuvem_palavras_negativas = gerar_nuvem_palavras(lista_palavras_negativas)
 nuvem_palavras_totais = gerar_nuvem_palavras(lista_palavras_totais)
 nuvem_palavras_positivas = gerar_nuvem_palavras(lista_palavras_positivas)
 
-# exibir as nuvens de palavras (todas juntas, em janelas separadas)
-exibir_nuvem_palavras(nuvem_palavras_negativas, "Avaliações negativas")
-exibir_nuvem_palavras(nuvem_palavras_totais, "Todas as avaliações")
-exibir_nuvem_palavras(nuvem_palavras_positivas, "Avaliações positivas")
+# exibir e salvar as nuvens de palavras (todas juntas, em janelas separadas)
+exibir_nuvem_palavras(nuvem_palavras_negativas, "Avaliações negativas", "assets/nuvem_palavras_negativas.png")
+exibir_nuvem_palavras(nuvem_palavras_totais, "Todas as avaliações", "assets/nuvem_palavras_totais.png")
+exibir_nuvem_palavras(nuvem_palavras_positivas, "Avaliações positivas", "assets/nuvem_palavras_positivas.png")
 plt.show()
