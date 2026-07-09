@@ -47,7 +47,8 @@ def obter_todas_palavras(dados, coluna_texto):
 def gerar_nuvem_palavras(texto):
   return WordCloud(width=800, height=500,
     max_font_size=110,
-    collocations=False).generate(texto)
+    collocations=False,
+    random_state=71).generate(texto)
 
 # função para exibir a nuvem de palavras
 def exibir_nuvem_palavras(nuvem_palavras, titulo="Nuvem de palavras", caminho_arquivo=None):

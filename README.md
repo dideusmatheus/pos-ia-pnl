@@ -122,3 +122,7 @@ As avaliações negativas, positivas e o conjunto total são isolados em três f
 ### Nuvem de palavras — Avaliações positivas
 
 ![Nuvem de palavras das avaliações positivas](assets/nuvem_palavras_positivas.png)
+
+## Versionamento
+
+1. Bag of Words e WordCloud
