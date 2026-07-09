@@ -17,13 +17,43 @@ def treinar_modelo(dados, coluna_texto, coluna_sentimento):
                                                     dados[coluna_sentimento],
                                                     stratify=dados[coluna_sentimento],
                                                     random_state = 71)
-  
+
   # treina o modelo de regressão logística
   regressao_logistica = LogisticRegression()
   regressao_logistica.fit(X_train, y_train)
 
   # retorna a acurácia do modelo
   return regressao_logistica.score(X_test, y_test)
+
+# função para retornar as palavras das avaliações negativas
+def obter_palavras_negativas(dados, coluna_texto):
+  texto_negativo = dados.query("polarity == 0")
+  todas_avaliacoes = list(texto_negativo[coluna_texto])
+  return ' '.join(todas_avaliacoes)
+
+# função para retornar as palavras das avaliações positivas
+def obter_palavras_positivas(dados, coluna_texto):
+  texto_positivo = dados.query("polarity == 1")
+  todas_avaliacoes = list(texto_positivo[coluna_texto])
+  return ' '.join(todas_avaliacoes)
+
+# função para retornar as palavras de todas as avaliações (positivas e negativas)
+def obter_todas_palavras(dados, coluna_texto):
+  todas_avaliacoes = list(dados[coluna_texto])
+  return ' '.join(todas_avaliacoes)
+
+# função para gerar a nuvem de palavras a partir de um texto
+def gerar_nuvem_palavras(texto):
+  return WordCloud(width=800, height=500,
+    max_font_size=110,
+    collocations=False).generate(texto)
+
+# função para exibir a nuvem de palavras
+def exibir_nuvem_palavras(nuvem_palavras):
+  plt.figure(figsize=(10,7))
+  plt.imshow(nuvem_palavras, interpolation='bilinear')
+  plt.axis("off")
+  plt.show()
 
 avaliacoes = pd.read_csv("data/Brazilian-Portuguese-Sentiment-Analysis-Datasets.csv")
 print('\n\n')
@@ -52,49 +82,17 @@ print(avaliacoes.polarity.value_counts())
 acuracia = treinar_modelo(avaliacoes, "review_text", "polarity")
 print(f"Acurácia do modelo: {acuracia}")
 
-# gerar a nuvem de palavras (word cloud) com todas as palavras das avaliações
-todas_avaliacoes = list(avaliacoes.review_text)
-todas_palavras = ' '.join(todas_avaliacoes)
-print("Todas as palavras das avaliações foram unidas com sucesso!")
-print(len(todas_palavras))
+# gerar a lista de palavras negativas, positivas e totais
+lista_palavras_negativas = obter_palavras_negativas(avaliacoes, "review_text")
+lista_palavras_totais = obter_todas_palavras(avaliacoes, "review_text")
+lista_palavras_positivas = obter_palavras_positivas(avaliacoes, "review_text")
 
-# gerar a nuvem de palavras
-nuvem_palavras = WordCloud(width=800, height=500,
-  max_font_size=110,
-  collocations=False).generate(todas_palavras)
-print("Nuvem de palavras gerada com sucesso!")
-print(nuvem_palavras)
+# gerar a 'url' da nuvem de palavras a partir das listas de palavras
+nuvem_palavras_negativas = gerar_nuvem_palavras(lista_palavras_negativas)
+nuvem_palavras_totais = gerar_nuvem_palavras(lista_palavras_totais)
+nuvem_palavras_positivas = gerar_nuvem_palavras(lista_palavras_positivas)
 
-# exibir a nuvem de palavras
-plt.figure(figsize=(10,7))
-plt.imshow(nuvem_palavras, interpolation='bilinear')
-plt.axis("off")
-plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# exibir as nuvens de palavras
+exibir_nuvem_palavras(nuvem_palavras_negativas)
+exibir_nuvem_palavras(nuvem_palavras_totais)
+exibir_nuvem_palavras(nuvem_palavras_positivas)
